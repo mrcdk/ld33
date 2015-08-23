@@ -1,0 +1,34 @@
+{
+    flow : {
+        build: {
+            android : {
+                sdk : 'C:\\Development\\Android\\sdk',
+                ant_path : 'C:\\Development\\Ant\\bin\\ant.bat'
+            }
+        }
+    },
+  project : {
+    name : 'LD33',
+    version : '0.1.0',
+    author : 'MrCdK',
+
+    app : {
+      name : 'ld33',
+      package : 'org.mrcdk.ld33',
+      main : 'Main'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+		gesluxe: '*',
+      }
+    },
+
+    files : {
+      config : 'config.json',
+      assets : 'assets/',
+	  index : { path:'custom_index.html => index.html', template:'project', not_listed:true }
+    }
+  }
+}
