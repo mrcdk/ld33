@@ -20,15 +20,27 @@ class Script1 extends BaseScript
 		// TODO Move to GameState
 		c1 = new Character("Tom", new Color(1, 0, 0, 1));
 		c2 = new Character("Elise", new Color(1, 0, 1, 1));
-		c2.textures.set("normal", Luxe.resources.texture("assets/t01a/normal.png"));
-		c2.textures.set("laugh", Luxe.resources.texture("assets/t01a/laugh.png"));
-		c2.textures.set("yelling", Luxe.resources.texture("assets/t01a/yelling.png"));
-		c2.textures.set("angry", Luxe.resources.texture("assets/t01a/angry.png"));
-		c2.textures.set("worried_1", Luxe.resources.texture("assets/t01a/worried_1.png"));
-		c2.textures.set("worried_2", Luxe.resources.texture("assets/t01a/worried_2.png"));
+		c2.textures.set("a_normal", Luxe.resources.texture("assets/t01a/normal.png"));
+		c2.textures.set("a_laugh", Luxe.resources.texture("assets/t01a/laugh.png"));
+		c2.textures.set("a_yelling", Luxe.resources.texture("assets/t01a/yelling.png"));
+		c2.textures.set("a_angry", Luxe.resources.texture("assets/t01a/angry.png"));
+		c2.textures.set("a_worried_1", Luxe.resources.texture("assets/t01a/worried_1.png"));
+		c2.textures.set("a_worried_2", Luxe.resources.texture("assets/t01a/worried_2.png"));
+		
+		c2.textures.set("b_normal_1", Luxe.resources.texture("assets/t01b/normal_1.png"));
+		c2.textures.set("b_normal_2", Luxe.resources.texture("assets/t01b/normal_2.png"));
+		c2.textures.set("b_laugh", Luxe.resources.texture("assets/t01b/laugh.png"));
+		c2.textures.set("b_happy", Luxe.resources.texture("assets/t01b/happy.png"));
+		c2.textures.set("b_worried", Luxe.resources.texture("assets/t01b/worried.png"));
+		c2.textures.set("b_hurt_1", Luxe.resources.texture("assets/t01b/hurt_1.png"));
+		c2.textures.set("b_hurt_2", Luxe.resources.texture("assets/t01b/hurt_2.png"));
 		
 		c1.show_name = "The monster";
 		c2.show_name = "A random girl";
+		
+		//Vars.choose_munchie = false;
+		//after_choice_name();
+		//return;
 		
 		f(function() {
 			game.dialog_box.hide(0);
@@ -38,27 +50,28 @@ class Script1 extends BaseScript
 			Luxe.timer.schedule(1, function() game.dialog_box.show(1, nextEvent));
 		});
 		m("I'm a monster.");
-		m("That kind of monster with green and slimmy skin, deformed body and... tentacles...");
+		m("Surprised, eh?");
+		m("I'm the kind of monster with green and slimmy skin, deformed body and... tentacles...");
 		tween(true, tween_fade.bind(game.background, 1, 1));
-		show(c2, "yelling");
+		show(c2, "a_yelling");
 		tween(true, tween_fade.bind(game.sprite, 0.8, 1));
 		m(c2, "Are you here?! Hello?!", 0, 0.01);
-		show(c2, "worried_1");
+		show(c2, "a_worried_1");
 		shake(20);
 		m(c1, "Holy cra... oh... hello, you scared the shit out of me...");
-		show(c2, "worried_2");
+		show(c2, "a_worried_2");
 		m(c2, "But... you are the monster here... you scare me more!");
 		m(c1, "Ouch... ;-;");
-		show(c2, "laugh");
+		show(c2, "a_laugh");
 		m(c2, "Hahaha I'm kidding you, silly!");
 		cm(game.background, 2, ColorMatrix.normal, ColorMatrix.desaturate);
 		f(true, function() c2.show_name = c2.name);
 		m('This is ${c2.name}. She is a good friend of mine, she doesn\'t care that I am a monster... or about anything else, really. She is kind of cute, even for a monster like me. Because she is an human, I have no chances with her...');
 		m("... but I... would like to...");
 		cm(game.background, 0.5, ColorMatrix.desaturate, ColorMatrix.normal, true);
-		show(c2, "angry");
+		show(c2, "a_angry");
 		m(c2, "Gosh! again?!");
-		show(c2, "normal");
+		show(c2, "a_normal");
 		m(c1, "Sorry, sorry ^^;");
 		m(c2, "So, are you coming or not?");
 		m(c1, "Yeah... I guess I will.");
@@ -68,7 +81,7 @@ class Script1 extends BaseScript
 			return tween_move(game.sprite, 2, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM));
 		});
 		m(c1, "Mmm that booty...");
-		show(c2, "laugh");
+		show(c2, "a_laugh");
 		tween(function() {
 			tween_fade(game.sprite, 0.2, 1);
 			return tween_move(game.sprite, 0.2, PositionHelper.get(game.sprite, RIGHT, BOTTOM));
@@ -76,12 +89,12 @@ class Script1 extends BaseScript
 		shake(20);
 		m(c2, "Yeah? did you call me?");
 		m(c1, "Haha...ha...haaa...");
-		show(c2, "normal");
+		show(c2, "a_normal");
 		m(c2, "I'm leaving for real this time!");
 		tween(true, function() {
-			return tween_move(game.sprite, 1, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM, new Vector(-game.sprite.origin.x, 10)));
+			return tween_move(game.sprite, 1, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM, new Vector(-game.sprite.origin.x-40, 10)));
 		});
-		show(c2, "worried_1");
+		show(c2, "a_worried_1");
 		m(c2, "Mmmmm...");
 		tween(true,function() {
 			tween_fade(game.sprite, 0.5, 0);
@@ -126,7 +139,10 @@ class Script1 extends BaseScript
 	}
 	
 	function choice_name_2() {
-		f(true, function() c1.show_name = "Munchie");
+		f(true, function() { 
+			Vars.choose_munchie = true;
+			c1.show_name = "Munchie";	
+		});
 		m("Ehm... Munchie???");
 		shake(20);
 		m(c1, "Of course not!!!");
@@ -139,7 +155,59 @@ class Script1 extends BaseScript
 	}
 	
 	function after_choice_name() {
-		m(c1, "After choice name");
+		f(function() {
+			game.background.color.a = 0;
+			game.sprite.color.a = 0;
+			game.background.texture = Luxe.resources.texture("assets/backgrounds/toilets.jpg");
+			game.sprite.pos = PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM);
+			game.dialog_box.hide(nextEvent);
+		});
+		tween(true, tween_fade.bind(game.background, 1.5, 1));
+		f(true,function() {
+			game.dialog_box.show();
+		});
+		m("I'm here, finally...");
+		// TODO more text wondering why he is here
+		m("Ugh, it smells really bad here... I wonder why.");
+		tween(function() {
+			tween_fade(game.sprite, 0.8, 1);
+			return tween_move(game.sprite, 2, PositionHelper.get(game.sprite, LEFT, BOTTOM));
+		});
+		show(c2, "a_worried_1");
+		m(c2, "Ugh, it smells like you after doing dirty things with me...");
+		cm(game.background, 0.2, ColorMatrix.normal, ColorMatrix.negative);
+		shake(100);
+		m("WH- WHA- WH-- WHAAAAT?!?!\nI'VE NEVER DONE THAT!!!");
+		cm(game.background, 0.2, ColorMatrix.negative, ColorMatrix.normal, true);
+		show(c2, "a_worried_2");
+		m(c2, "... like play in the mud... eat dirt... or... umm... what does a monster do?");
+		m("Oh...");
+		m(c1, "Ummm... I usually play with my tentacle.");
+		show(c2, "a_worried_1");
+		m(c2, "You mean... tentacleS... right?");
+		m(c1, "Oh... yeah, yeah... tentacleS... of course... multiple ones...");
+		m("That was close...");
+		if (Vars.choose_munchie) {
+			transition(game.sprite, c2.textures.get("b_normal_1"), 1.2, TransitionHelper.fade);
+			tween(tween_move.bind(game.sprite, 1, PositionHelper.get(game.sprite, CENTER, BOTTOM)));
+			m(c2, "Wait a second...");
+			m(c2, "Your name...");
+			m(c1, "...");
+			shake(40);
+			show(c2, "b_laugh");
+			m(c2, "HAHAHAHA");
+			m(c1, "Don't ;-;");
+			shake(20);
+			show(c2, "b_happy");
+			m(c2, "Hahaha");
+			m(c2, "Mu... Mun... Munchie...");
+			m(c1, ";-;", 10 / 60, 0.45);
+		} else {
+			transition(game.sprite, c2.textures.get("b_normal_1"), TransitionHelper.fade);
+			tween(true, tween_move.bind(game.sprite, 1, PositionHelper.get(game.sprite, CENTER, BOTTOM)));
+		}
+		show(c2, "b_normal_1");
+		m(c1, "So, remind me why is this the usual place, please?");
 	}
 	
 }

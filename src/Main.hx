@@ -82,7 +82,10 @@ class Main extends luxe.Game {
 				{ id:"assets/ui_box_3.png" },
 				{ id:"assets/next_text.png" },
 				
-				{ id:"assets/backgrounds/street_day_crop.jpg" },
+				{ id:"assets/backgrounds/street_day.jpg" },
+				{ id:"assets/backgrounds/street.jpg" },
+				{ id:"assets/backgrounds/toilets.jpg" },
+				{ id:"assets/backgrounds/park.jpg" },
 				
 				{ id:"assets/t01a/angry.png" },
 				{ id:"assets/t01a/normal.png" },
@@ -90,6 +93,14 @@ class Main extends luxe.Game {
 				{ id:"assets/t01a/worried_1.png" },
 				{ id:"assets/t01a/worried_2.png" },
 				{ id:"assets/t01a/yelling.png" },
+				
+				{ id:"assets/t01b/happy.png" },
+				{ id:"assets/t01b/normal_1.png" },
+				{ id:"assets/t01b/normal_2.png" },
+				{ id:"assets/t01b/laugh.png" },
+				{ id:"assets/t01b/worried.png" },
+				{ id:"assets/t01b/hurt_1.png" },
+				{ id:"assets/t01b/hurt_2.png" },
 				
 			],
 			shaders: [

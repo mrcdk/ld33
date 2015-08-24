@@ -36,8 +36,8 @@ class ColorMatrix
 			];
 		}
 		
-	public static var desaturate(get, never):Array<Float>;
-		static inline function get_desaturate():Array<Float> {
+	public static var desaturateLuminance(get, never):Array<Float>;
+		static inline function get_desaturateLuminance():Array<Float> {
 			return [
 				0.2764723, 0.9297080, 0.0938197, 0, -37.1,
 				0.2764723, 0.9297080, 0.0938197, 0, -37.1,
@@ -54,6 +54,51 @@ class ColorMatrix
 				0,0,0,1,0
 			];
 		}
+		
+	public static var desaturate(get, never):Array<Float>;
+		static inline function get_desaturate():Array<Float> {
+			return saturation(-1);
+		}
+	public static var negative(get, never):Array<Float>;
+		static inline function get_negative():Array<Float> {
+			return [
+				-1, 0, 0, 0, 255,
+				0, -1, 0, 0, 255,
+				0, 0, -1, 0, 255,
+				0, 0, 0, 1, 0
+			];
+		}
+		
+	static public function brightness(amount:Float) {
+		var b = amount + 1;
+		return [
+			b, 0, 0, 0, 0,
+			0, b, 0, 0, 0,
+			0, 0, b, 0, 0,
+			0, 0, 0, 1, 0
+		];
+	}
+	static public function saturation(amount:Float) {
+		var x = amount * 2 / 3 + 1;
+		var y = ((x - 1) * -0.5);
+		return [
+			x, y, y, 0, 0,
+			y, x, y, 0, 0,
+			y, y, x, 0, 0,
+			0, 0, 0, 1, 0
+		];
+	}
+	static public function contrast(amount:Float) {
+		var v = amount + 1;
+		var o = -128 * (v - 1);
+		return [
+			v, 0, 0, 0, o,
+			0, v, 0, 0, o,
+			0, 0, v, 0, o,
+			0, 0, 0, 1, 0
+		];
+	}
+		
 	
 	var shader:Shader;
 	var multipliers:Matrix;
@@ -69,6 +114,7 @@ class ColorMatrix
 	}
 	
 	public function applyTween(sprite:Sprite, time:Float, from:Array<Float>, to:Array<Float>) {
+		apply(from);
 		sprite.shader = shader;
 		var t = { t:0. };
 		var tween = Actuate.update(tweenFunc, time, [from, to, 0], [from, to, 1]);
@@ -85,11 +131,11 @@ class ColorMatrix
 		);
 		
 		offsets.set(
-			m[4] / 255, m[9] / 255, m[14] / 255, m[19] / 255
+			m[4] / 255., m[9] / 255., m[14] / 255., m[19] / 255.
 		);
 		
 		shader.set_matrix4("multipliers", multipliers.transpose());
-		shader.set_vector4("offset", offsets);
+		shader.set_vector4("offsets", offsets);
 	}
 	
 	function tweenFunc(from:Array<Float>, to:Array<Float>, t:Float) {

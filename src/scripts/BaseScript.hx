@@ -6,6 +6,8 @@ import luxe.tween.Actuate;
 import luxe.tween.actuators.GenericActuator.IGenericActuator;
 import luxe.Vector;
 import mint.Control.MouseSignal;
+import phoenix.Texture;
+import TransitionHelper.TransitionFunc;
 
 /**
  * ...
@@ -56,6 +58,15 @@ class BaseScript
 			});
 			
 			if(!wait) nextEvent();
+		});
+	}
+	
+	#if release inline #end
+	public function transition(sprite:Sprite, texture:Texture, time:Float = 1, func:TransitionFunc, ?wait:Bool = false) {
+		f(function() {
+			var ts:TransitionHelper = sprite.get("transition");
+			ts.transition(texture, time, func, wait ? nextEvent : null);
+			if (!wait) nextEvent();
 		});
 	}
 	

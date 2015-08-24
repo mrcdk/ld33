@@ -55,8 +55,8 @@ class GameState extends State {
 			name: "BG",
 			centered: false,
 			size: new Vector(1280, 720),
-			texture: Luxe.resources.texture("assets/backgrounds/street_day_crop.jpg"),
-			depth: 10,
+			texture: Luxe.resources.texture("assets/backgrounds/street_day.jpg"),
+			depth: 0,
 		} );
 		background.add(new TransitionHelper());
 		
@@ -64,8 +64,8 @@ class GameState extends State {
 		sprite = new Sprite( {
 			name: "Char",
 			texture:Luxe.resources.texture("assets/t01a/normal.png"),
-			size: new Vector(416, 600),
-			depth: 20,
+			size: new Vector(416 * 1.2, 600 * 1.2),
+			depth: 50,
 		} );
 		sprite.add(new TransitionHelper());
 		
@@ -140,7 +140,7 @@ class GameState extends State {
 			var button = new Button( {
 				parent: Main.mint_canvas,
 				name: "button" + i,
-				x: 0, y:0, w:dimensions.x + 32, h: dimensions.y + 16,
+				x: 0, y:0, w:dimensions.x + 32, h: dimensions.y + 32,
 				text: choice.text,
 				text_size: 24,
 				onclick: function(e, c) {

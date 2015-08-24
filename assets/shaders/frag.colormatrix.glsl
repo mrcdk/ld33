@@ -14,7 +14,7 @@ void main() {
 
 	vec4 tcol = texture2D(tex0, tcoord);
 	//tcol = vec4(tcol.rgb / tcol.a, tcol.a);
-	tcol = offsets + tcol * multipliers;
+	tcol = (tcol * multipliers) + offsets;
 	//tcol = vec4(tcol.rgb * tcol.a, tcol.a);
 	gl_FragColor = tcol * color;
 

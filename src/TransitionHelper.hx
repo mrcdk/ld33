@@ -5,6 +5,7 @@ import luxe.options.ComponentOptions;
 import luxe.Sprite;
 import luxe.tween.Actuate;
 import luxe.Vector;
+import luxe.Visual;
 import phoenix.Texture;
 
 /**
@@ -31,12 +32,15 @@ class TransitionHelper extends Component {
 			size: sprite.size,
 			origin: sprite.origin,
 			scene: sprite.scene,
-			texture: sprite.texture,
-			depth: sprite.depth - 0.001,
-			parent: sprite,
+			//texture: sprite.texture,
+			depth: sprite.depth - 0.1,
 		} );
 		
 		tmp.visible = false;
+	}
+	
+	override public function update(dt:Float) {
+		tmp.pos.copy_from(sprite.pos);
 	}
 	
 	public function transition(texture:Texture, time:Float = 1, func:TransitionFunc, ?cb:Void->Void) {
@@ -45,10 +49,10 @@ class TransitionHelper extends Component {
 	}
 	
 	static public function fade(texture:Texture, time:Float = 1, sprite:Sprite, tmp:Sprite, ?cb:Void->Void) {
-		tmp.color.a = 0;
 		tmp.visible = true;
+		tmp.color.a = 0;
 		tmp.texture = texture;
-		tmp.color.tween(time, { a:1 } );
+		tmp.color.tween(time, { a:1 });
 		sprite.color.tween(time, { a:0 } ).onComplete(function() {
 			sprite.texture = texture;
 			sprite.color.a = 1;
@@ -62,7 +66,6 @@ class TransitionHelper extends Component {
 		tmp.color.set(0.2, 0.2, 0.2, 1);
 		tmp.visible = true;
 		tmp.texture = texture;
-		tmp.parent = null;
 		tmp.color.tween(time, { r:1, g:1, b:1, a:1 } );
 		sprite.color.tween(time / 2, { r:0.2, g:0.2, b:0.2 } );
 		var v = switch(direction) {
@@ -78,7 +81,6 @@ class TransitionHelper extends Component {
 			sprite.color.set(1, 1, 1, 1);
 			tmp.color.set(1, 1, 1, 1);
 			tmp.visible = false;
-			tmp.parent = sprite;
 			if (cb != null) cb();
 		});
 		
