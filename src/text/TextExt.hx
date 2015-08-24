@@ -32,6 +32,7 @@ typedef CharFormat = {
 class TextExt extends Text {
 
 	public var state:TextState = NONE;
+	public var callback:Void->Void = null;
 	public var has_more_text(get, never):Bool;
 		inline function get_has_more_text() return pages.length > current_page;
 	
@@ -122,7 +123,9 @@ class TextExt extends Text {
 			tween = vecColor.tween(fade_in, { a: color.a }, true).delay(delay);
 			
 			if (i == cache.length - 1) {
-				tween.onComplete(function() state = COMPLETED);
+				tween.onComplete(function() { 
+					state = COMPLETED; 
+				});
 			}
 			
 			

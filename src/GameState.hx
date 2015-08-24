@@ -131,14 +131,12 @@ class GameState extends State {
 		var font = Luxe.resources.font('assets/fonts/carlito_regular.fnt');
 		var dimensions = new Vector();
 		var lerp = function(i) return Maths.lerp(20, 100, i / choices.length);
-		var button:Button;
 		var txt:Text;
 		var visual:Visual;
-		var choice;
 		for (i in 0...choices.length) {
-			choice = choices[i];
+			var choice = choices[i];
 			font.dimensions_of(choice.text, 24, dimensions);
-			button =  new Button( {
+			var button = new Button( {
 				parent: Main.mint_canvas,
 				name: "button" + i,
 				x: 0, y:0, w:dimensions.x + 32, h: dimensions.y + 16,
@@ -160,7 +158,6 @@ class GameState extends State {
 			button.mouse_input = false;
 			visual.color.tween(time, { a:1 } ).onComplete(function() button.mouse_input = true);
 			txt.color.tween(time, { a:1 } );
-			
 			
 			Main.mint_layout.margin(button, top, percent, lerp(i));
 			Main.mint_layout.anchor(button, center_x, center_x);

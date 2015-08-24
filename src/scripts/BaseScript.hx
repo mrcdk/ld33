@@ -4,6 +4,7 @@ import luxe.Sprite;
 import luxe.Text.TextAlign;
 import luxe.tween.Actuate;
 import luxe.tween.actuators.GenericActuator.IGenericActuator;
+import luxe.Vector;
 import mint.Control.MouseSignal;
 
 /**
@@ -36,7 +37,7 @@ class BaseScript
 				align: align,
 				align_vertical: align_vertical,
 				color: color,
-			}
+			},
 		});
 	}
 	
@@ -59,7 +60,7 @@ class BaseScript
 	}
 	
 	#if release inline #end
-	public function show(c:Character, state:String, ?wait:Bool = false, ?func:Void->IGenericActuator) {
+	public function show(c:Character, state:String) {
 		f(function() {
 			var texture = c.textures.get(state);
 			if (texture == null) {
@@ -67,25 +68,35 @@ class BaseScript
 			} else {
 				game.sprite.texture = texture;
 			}
-			var t = game.sprite.color.tween(1, { a:1 } );
+			
+			nextEvent();
+		});
+	}
+	
+	#if release inline #end
+	public function tween(?wait:Bool = false, ?func:Void->IGenericActuator) {
+		f(function() {			
+			var tween = null;
+			if (func == null) {
+				wait = false;
+			} else {
+				tween = func();
+			}
+			
 			if (wait) {
-				t.onComplete(function() nextEvent());
+				tween.onComplete(nextEvent);
 			} else {
 				nextEvent();
 			}
 		});
 	}
 	#if release inline #end
-	public function hide(c:Character, ?wait:Bool = false, ?func:Void->IGenericActuator) {
-		f(function() {
-			var t = game.sprite.color.tween(1, { a:0.4 } ).onComplete(function() game.sprite.color.a = 0);
-			Actuate.tween(game.sprite.pos, 1, { x: Luxe.camera.size.x + game.sprite.origin.x } );
-			if (wait) {
-				t.onComplete(function() nextEvent());
-			} else {
-				nextEvent();
-			}
-		});
+	public function tween_fade(sprite:Sprite, time:Float, to:Float) {
+		return sprite.color.tween(time, { a:to } );
+	}
+	#if release inline #end
+	public function tween_move(sprite:Sprite, time:Float, to:Vector) {
+		return Actuate.tween(sprite.pos, time, { x: to.x, y: to.y } );
 	}
 	
 	#if release inline #end

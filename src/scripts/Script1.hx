@@ -1,5 +1,7 @@
 package scripts;
+
 import luxe.Color;
+import luxe.Vector;
 
 /**
  * ...
@@ -36,35 +38,54 @@ class Script1 extends BaseScript
 		});
 		m("I'm a monster.");
 		m("That kind of monster with green and slimmy skin, deformed body and... tentacles...");
-		f(function() {
-			game.background.color.tween(2, { a:1 } ).onComplete(nextEvent);
-		});
-		show(c2, "yelling", false);
+		tween(true, tween_fade.bind(game.background, 1, 1));
+		show(c2, "yelling");
+		tween(true, tween_fade.bind(game.sprite, 0.8, 1));
 		m(c2, "Are you here?! Hello?!", 0, 0.01);
-		show(c2, "worried_1", false);
+		show(c2, "worried_1");
 		shake(20);
 		m(c1, "Holy cra... oh... hello, you scared the shit out of me...");
-		show(c2, "worried_2", false);
+		show(c2, "worried_2");
 		m(c2, "But... you are the monster here... you scare me more!");
 		m(c1, "Ouch... ;-;");
-		show(c2, "laugh", false);
+		show(c2, "laugh");
 		m(c2, "Hahaha I'm kidding you silly!");
 		cm(game.background, 2, ColorMatrix.normal, ColorMatrix.desaturate);
 		f(true, function() c2.show_name = c2.name);
-		m('This is ${c2.name}. She is a good friend of mine, she doesn\'t care that I am a monster... or about anything really. She is kind of cute, even for a monster like me. Because she is an human, I have no chances with her...');
+		m('This is ${c2.name}. She is a good friend of mine, she doesn\'t care that I am a monster... or about anything else, really. She is kind of cute, even for a monster like me. Because she is an human, I have no chances with her...');
 		m("... but I... would like to...");
 		cm(game.background, 0.5, ColorMatrix.desaturate, ColorMatrix.normal, true);
-		show(c2, "angry", false);
+		show(c2, "angry");
 		m(c2, "Gosh! again?!");
-		show(c2, "normal", false);
+		show(c2, "normal");
 		m(c1, "^^; Sorry sorry.");
 		m(c2, "So, are you coming or not?");
 		m(c1, "Yeah... I guess I will.");
-		m(c2, "Ok! I'll be waiting for you in the usual place!");
+		m(c2, "Ok! I'll be waiting for you at the usual place!");
 		m(c1, "Ok.");
-		hide(c2, false);
+		tween(function() {
+			return tween_move(game.sprite, 2, new Vector(Luxe.camera.size.x + game.sprite.origin.x, game.sprite.pos.y));
+		});
 		m(c1, "Mmm that booty...");
-		m(c1, "Wait, what? ... I mean... well... uhh...");
+		show(c2, "laugh");
+		tween(function() {
+			tween_fade(game.sprite, 0.2, 1);
+			return tween_move(game.sprite, 0.2, new Vector(Luxe.camera.size.x - game.sprite.origin.x, game.sprite.pos.y));
+		});
+		shake(20);
+		m(c2, "Yeah? did you call me?");
+		m(c1, "Haha...ha...ha . . .");
+		show(c2, "normal");
+		m(c2, "I'm leaving for real this time!");
+		tween(true, function() {
+			return tween_move(game.sprite, 1, new Vector(Luxe.camera.size.x - game.sprite.origin.x/2, game.sprite.pos.y));
+		});
+		m(c2, "Mmmmm");
+		tween(true,function() {
+			tween_fade(game.sprite, 0.5, 0);
+			return tween_move(game.sprite, 0.5, new Vector(Luxe.camera.size.x + game.sprite.origin.x, game.sprite.pos.y));
+		});
+		m(". . .", 10 / 60, 0.45);
 		f(true, function() game.background.color.tween(2, { a:0 } ));
 		m("Aaaanyway... As I was telling you, I'm a monster, the worst kind of monster that you can imagine.");
 		m("I would show you a picture of me but that would mean to go and stea... \"find\" an image somewhere.");
