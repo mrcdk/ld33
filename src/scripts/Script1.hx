@@ -49,7 +49,7 @@ class Script1 extends BaseScript
 		m(c2, "But... you are the monster here... you scare me more!");
 		m(c1, "Ouch... ;-;");
 		show(c2, "laugh");
-		m(c2, "Hahaha I'm kidding you silly!");
+		m(c2, "Hahaha I'm kidding you, silly!");
 		cm(game.background, 2, ColorMatrix.normal, ColorMatrix.desaturate);
 		f(true, function() c2.show_name = c2.name);
 		m('This is ${c2.name}. She is a good friend of mine, she doesn\'t care that I am a monster... or about anything else, really. She is kind of cute, even for a monster like me. Because she is an human, I have no chances with her...');
@@ -58,7 +58,7 @@ class Script1 extends BaseScript
 		show(c2, "angry");
 		m(c2, "Gosh! again?!");
 		show(c2, "normal");
-		m(c1, "^^; Sorry sorry.");
+		m(c1, "Sorry, sorry ^^;");
 		m(c2, "So, are you coming or not?");
 		m(c1, "Yeah... I guess I will.");
 		m(c2, "Ok! I'll be waiting for you at the usual place!");
@@ -74,19 +74,20 @@ class Script1 extends BaseScript
 		});
 		shake(20);
 		m(c2, "Yeah? did you call me?");
-		m(c1, "Haha...ha...ha . . .");
+		m(c1, "Haha...ha...haaa...");
 		show(c2, "normal");
 		m(c2, "I'm leaving for real this time!");
 		tween(true, function() {
 			return tween_move(game.sprite, 1, new Vector(Luxe.camera.size.x - game.sprite.origin.x/2, game.sprite.pos.y));
 		});
-		m(c2, "Mmmmm");
+		show(c2, "worried_1");
+		m(c2, "Mmmmm...");
 		tween(true,function() {
 			tween_fade(game.sprite, 0.5, 0);
 			return tween_move(game.sprite, 0.5, new Vector(Luxe.camera.size.x + game.sprite.origin.x, game.sprite.pos.y));
 		});
+		tween(tween_fade.bind(game.background, 2.5, 0));
 		m(". . .", 10 / 60, 0.45);
-		f(true, function() game.background.color.tween(2, { a:0 } ));
 		m("Aaaanyway... As I was telling you, I'm a monster, the worst kind of monster that you can imagine.");
 		m("I would show you a picture of me but that would mean to go and stea... \"find\" an image somewhere.");
 		m("(Oh! Oh! Oh!!! Yeah! That will do...)");
