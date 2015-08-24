@@ -51,6 +51,7 @@ class Script1 extends BaseScript
 		});
 		m("I'm a monster.");
 		m("Surprised, eh?");
+		m("It's not like it is the Ludum Dare theme or anything like that...");
 		m("I'm the kind of monster with green and slimmy skin, deformed body and... tentacles...");
 		tween(true, tween_fade.bind(game.background, 1, 1));
 		show(c2, "a_yelling");

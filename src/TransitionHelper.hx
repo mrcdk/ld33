@@ -32,10 +32,10 @@ class TransitionHelper extends Component {
 			size: sprite.size,
 			origin: sprite.origin,
 			scene: sprite.scene,
-			//texture: sprite.texture,
+			texture: sprite.texture,
 			depth: sprite.depth - 0.1,
 		} );
-		
+		tmp.uv = sprite.uv;
 		tmp.visible = false;
 	}
 	
