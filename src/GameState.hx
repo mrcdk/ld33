@@ -17,6 +17,14 @@ import luxe.tween.Actuate;
 import luxe.tween.actuators.GenericActuator.IGenericActuator;
 import luxe.utils.Maths;
 import luxe.Vector;
+import luxe.Visual;
+import mint.Button;
+import mint.Control;
+import mint.Control.MouseSignal;
+import mint.Label;
+import mint.layout.margins.Margins.AnchorType;
+import mint.layout.margins.Margins.MarginTarget;
+import mint.layout.margins.Margins.MarginType;
 import phoenix.Shader;
 import scripts.Script1;
 import text.TextExt.TextState;
@@ -78,14 +86,17 @@ class GameState extends State {
 		
 		var script = new Script1(this);
 		
+		
+		
 		nextEvent();
+		
 	}
 	
 	override public function update(dt:Float) {
 		
 		var advance = false;
 		
-		if (Luxe.input.inputpressed("continue") && !dialog_box.hidden) {
+		if (!Main.disable_advance && Luxe.input.inputpressed("continue") && !dialog_box.hidden) {
 			if (dialog_box.has_more_text) {
 				dialog_box.advanceText();
 				advance = false;
@@ -111,6 +122,66 @@ class GameState extends State {
 				if(seq.data.func != null) seq.data.func();
 			case _:
 		}
+	}
+	
+	public function showChoices(?time:Float = 0.8, choices:Array<{text:String, func:Void->Void } > ) {
+		
+		Main.disable_advance = true;
+		
+		var font = Luxe.resources.font('assets/fonts/carlito_regular.fnt');
+		var dimensions = new Vector();
+		var lerp = function(i) return Maths.lerp(20, 100, i / choices.length);
+		var button:Button;
+		var txt:Text;
+		var visual:Visual;
+		var choice;
+		for (i in 0...choices.length) {
+			choice = choices[i];
+			font.dimensions_of(choice.text, 24, dimensions);
+			button =  new Button( {
+				parent: Main.mint_canvas,
+				name: "button" + i,
+				x: 0, y:0, w:dimensions.x + 32, h: dimensions.y + 16,
+				text: choice.text,
+				text_size: 24,
+				onclick: function(e, c) {
+					choice.func();
+					hideChoices(c);
+				}
+			} );
+			
+			visual = Luxe.scene.get('${button.name}.visual');
+			txt = Luxe.scene.get('${button.name}.label.text');
+			txt.font = font;
+			txt.geom.texture = txt.font.pages[0];
+			
+			visual.color.a = 0;
+			txt.color.a = 0;
+			button.mouse_input = false;
+			visual.color.tween(time, { a:1 } ).onComplete(function() button.mouse_input = true);
+			txt.color.tween(time, { a:1 } );
+			
+			
+			Main.mint_layout.margin(button, top, percent, lerp(i));
+			Main.mint_layout.anchor(button, center_x, center_x);
+		}
+
+	}
+	
+	public function hideChoices(?time:Float = 0.8, ?selected:Control) {
+		
+		var txt:Text;
+		var visual:Visual;
+		var delay = time + 0.2;
+		for (button in Main.mint_canvas.children) {
+			visual = Luxe.scene.get('${button.name}.visual');
+			txt = Luxe.scene.get('${button.name}.label.text');
+			button.mouse_input = false;
+			visual.color.tween(time, { a:0 } );
+			txt.color.tween(time, { a:0 } ).delay(button == selected ? delay : 0).onComplete(button.destroy);
+		}
+		
+		Luxe.timer.schedule(time + delay, function() { Main.disable_advance = false; nextEvent(); } );
 	}
 	
 }

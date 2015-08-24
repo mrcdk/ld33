@@ -4,6 +4,7 @@ import luxe.Sprite;
 import luxe.Text.TextAlign;
 import luxe.tween.Actuate;
 import luxe.tween.actuators.GenericActuator.IGenericActuator;
+import mint.Control.MouseSignal;
 
 /**
  * ...
@@ -40,8 +41,8 @@ class BaseScript
 	}
 	
 	#if release inline #end
-	public function f(f:Void->Void) {
-		game.sequence.push(FUNC, {func: f});
+	public function f(?autoAdvance:Bool = false, f:Void->Void) {
+		game.sequence.push(FUNC, { func: function() { f(); if (autoAdvance) nextEvent(); } } );
 	}
 	
 	#if release inline #end
@@ -85,6 +86,18 @@ class BaseScript
 				nextEvent();
 			}
 		});
+	}
+	
+	#if release inline #end
+	public function choices(?time:Float = 1, choices:Array<{text:String, func:Void->Void } >) {
+		f(function() {
+			game.showChoices(time, choices);
+		});
+	}
+	
+	#if release inline #end
+	public function shake(t:Float) {
+		f(true, function() Luxe.camera.shake(t));
 	}
 	
 	inline function nextEvent() {

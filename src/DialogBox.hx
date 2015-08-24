@@ -115,6 +115,8 @@ class DialogBox extends Entity
 		name_text = new Text( {
 			name: "name text",
 			font: Luxe.resources.font('assets/fonts/carlito_regular.fnt'),
+			// TODO mint overrides the text format with the default shader
+			shader: Luxe.resources.shader("custom_bitmapfont"),
 			depth: _options.depth + 0.4,
 			//bounds_wrap: false,
 			//bounds: new Rectangle(name_bg.pos.x + 8, name_bg.pos.y + 4, name_bg.width - 8, name_bg.height - 4),
@@ -201,7 +203,7 @@ class DialogBox extends Entity
 	}
 	
 	override public function update(dt:Float) {
-		next_sprite.visible = text != "" && msg_text.state != RUNNING;
+		next_sprite.visible = !Main.disable_advance && text != "" && msg_text.state != RUNNING;
 		if (next_sprite.visible) {
 			next_sprite.rotation_z = msg_text.has_more_text ? 90 : 0;
 		}

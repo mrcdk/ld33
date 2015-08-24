@@ -2,18 +2,30 @@ package;
 
 import luxe.AppConfig;
 import luxe.Camera.SizeMode;
+import luxe.Color;
 import luxe.Entity;
 import luxe.Input;
 import luxe.options.StateOptions;
 import luxe.Parcel;
 import luxe.ParcelProgress;
+import luxe.Screen.WindowEvent;
 import luxe.States;
 import luxe.Text;
 import luxe.Vector;
+import mint.Canvas;
+import mint.layout.margins.Margins;
+import mint.render.luxe.Convert;
+import mint.render.luxe.LuxeMintRender;
+import phoenix.Batcher;
 
 class Main extends luxe.Game {
 	
-	var machine:States;
+	public static var mint_canvas:Canvas;
+	public static var mint_renderer:LuxeMintRender;
+	public static var mint_layout:Margins;
+	
+	public static var machine:States;
+	public static var disable_advance:Bool = false;
 	
 	override public function config(config:luxe.AppConfig):AppConfig {
 		/*
@@ -38,6 +50,18 @@ class Main extends luxe.Game {
 		
 		Luxe.camera.size_mode = SizeMode.contain;
 		Luxe.camera.size = new Vector(1280, 720);
+		
+		var mint_batcher = Luxe.renderer.create_batcher( { name: "mint_batcher", camera: Luxe.camera.view } );
+		
+		mint_renderer = new LuxeMintRender({batcher: mint_batcher, depth: 1000});
+		mint_layout = new Margins();
+		
+		mint_canvas = new Canvas( {
+			name: 'canvas',
+			rendering: mint_renderer,
+            options: { color:new Color(1,1,1,0.0) },
+            x: 0, y:0, w: 1280, h: 720 - 180
+		} );
 		
 		var parcel = new Parcel({
 			fonts: [
@@ -86,11 +110,39 @@ class Main extends luxe.Game {
 		
 	}
 	
+	override public function onrender() {
+		mint_canvas.render();
+	}
+	override function update(dt:Float) {
+		mint_canvas.update(dt);
+	}
+	override function onmousemove(e) {
+		mint_canvas.mousemove(Convert.mouse_event(e, Luxe.camera.view));
+	}
+    override function onmousewheel(e) {
+        mint_canvas.mousewheel( Convert.mouse_event(e, Luxe.camera.view) );
+    }
+    override function onmouseup(e) {
+        mint_canvas.mouseup( Convert.mouse_event(e, Luxe.camera.view) );
+    }
+    override function onmousedown(e) {
+        mint_canvas.mousedown( Convert.mouse_event(e, Luxe.camera.view) );
+    }
+    override function onkeydown(e:luxe.Input.KeyEvent) {
+        mint_canvas.keydown( Convert.key_event(e) );
+    }
+    override function ontextinput(e:luxe.Input.TextEvent) {
+        mint_canvas.textinput( Convert.text_event(e) );
+    }
+	
 	override function onkeyup(e:KeyEvent) {
+		mint_canvas.keyup(Convert.key_event(e));
+		
+		#if !web
 		if(e.keycode == Key.escape)
 			Luxe.shutdown();
+		#end
 	}
 
-	override function update(dt:Float) {
-	}
+	
 }
