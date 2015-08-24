@@ -51,7 +51,6 @@ class GameState extends State {
 		Luxe.input.bind_key("continue", Key.space);
 		Luxe.input.bind_mouse("continue", MouseButton.left);
 		
-		
 		background = new Sprite( {
 			name: "BG",
 			centered: false,
@@ -59,14 +58,16 @@ class GameState extends State {
 			texture: Luxe.resources.texture("assets/backgrounds/street_day_crop.jpg"),
 			depth: 10,
 		} );
+		background.add(new TransitionHelper());
+		
 		
 		sprite = new Sprite( {
 			name: "Char",
-			texture:Luxe.resources.texture("assets/char.png"),
-			pos: new Vector(Luxe.camera.size.x / 2, Luxe.camera.size.y / 2 + 60),
+			texture:Luxe.resources.texture("assets/t01a/normal.png"),
 			size: new Vector(416, 600),
 			depth: 20,
 		} );
+		sprite.add(new TransitionHelper());
 		
 		dialog_box = new DialogBox( {
 			name: "Dialog box",
@@ -76,7 +77,7 @@ class GameState extends State {
 			name_offset: new Vector(8, -16),
 			name_bounds: new Rectangle(8, 2, 8, 4),
 			next_offset: new Vector(42, 32),
-			depth: 30,
+			depth: 100,
 		} );
 		
 		color_matrix = new ColorMatrix();

@@ -34,6 +34,7 @@ class Script1 extends BaseScript
 			game.dialog_box.hide(0);
 			game.background.color.a = 0;
 			game.sprite.color.a = 0;
+			game.sprite.pos = PositionHelper.get(game.sprite, CENTER, BOTTOM);
 			Luxe.timer.schedule(1, function() game.dialog_box.show(1, nextEvent));
 		});
 		m("I'm a monster.");
@@ -64,13 +65,13 @@ class Script1 extends BaseScript
 		m(c2, "Ok! I'll be waiting for you at the usual place!");
 		m(c1, "Ok.");
 		tween(function() {
-			return tween_move(game.sprite, 2, new Vector(Luxe.camera.size.x + game.sprite.origin.x, game.sprite.pos.y));
+			return tween_move(game.sprite, 2, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM));
 		});
 		m(c1, "Mmm that booty...");
 		show(c2, "laugh");
 		tween(function() {
 			tween_fade(game.sprite, 0.2, 1);
-			return tween_move(game.sprite, 0.2, new Vector(Luxe.camera.size.x - game.sprite.origin.x, game.sprite.pos.y));
+			return tween_move(game.sprite, 0.2, PositionHelper.get(game.sprite, RIGHT, BOTTOM));
 		});
 		shake(20);
 		m(c2, "Yeah? did you call me?");
@@ -78,13 +79,13 @@ class Script1 extends BaseScript
 		show(c2, "normal");
 		m(c2, "I'm leaving for real this time!");
 		tween(true, function() {
-			return tween_move(game.sprite, 1, new Vector(Luxe.camera.size.x - game.sprite.origin.x/2, game.sprite.pos.y));
+			return tween_move(game.sprite, 1, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM, new Vector(-game.sprite.origin.x, 10)));
 		});
 		show(c2, "worried_1");
 		m(c2, "Mmmmm...");
 		tween(true,function() {
 			tween_fade(game.sprite, 0.5, 0);
-			return tween_move(game.sprite, 0.5, new Vector(Luxe.camera.size.x + game.sprite.origin.x, game.sprite.pos.y));
+			return tween_move(game.sprite, 0.5, PositionHelper.get(game.sprite, OUT_RIGHT, BOTTOM));
 		});
 		tween(tween_fade.bind(game.background, 2.5, 0));
 		m(". . .", 10 / 60, 0.45);

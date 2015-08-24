@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<link rel="icon" href="favicon.png"/>
+		<meta charset="utf-8">
+
+		<style>
+			body {
+				font-family: monospace;
+				font-size: 22px;
+				color: white;
+				
+			}
+			#window1 {
+				margin: 0 auto 0 auto;
+			}
+			.info {
+				margin-left: 20%;
+				margin-right: 20%;
+			}
+		</style>
+
+		{{#each project.app.web.libs~}}
+			<script type="text/javascript" src="{{this}}"></script>
+		{{/each}}
+
+	</head>
+
+	<body style="padding: 0; margin: 0; background-color: #111111;">
+		
+		
+		<script type="text/javascript" src="./{{project.app.name}}{{#if project.app.web.min}}.min{{/if}}.js"></script>
+	</body>
+
+</html>

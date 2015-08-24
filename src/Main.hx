@@ -35,13 +35,16 @@ class Main extends luxe.Game {
 		];
 		*/
 		
+		
 		#if !embed
 		config.window.width = 1280;
 		config.window.height = 720;
 		#else
-		config.window.width = 900;
-		config.window.height = 600;
+		config.window.width = 890;
+		config.window.height = 501;
+		config.window.fullscreen = true;
 		#end
+		
 		config.window.title = "MrCdK - LD33";
 		
 		#if web

@@ -15,20 +15,23 @@
     app : {
       name : 'ld33',
       package : 'org.mrcdk.ld33',
-      main : 'Main'
+      main : 'Main',
+	  mobile: {
+		  orientation: 'landscape both'
+	  }
     },
 
     build : {
       dependencies : {
         luxe : '*',
 		mint: '*'
-      }
+      },
     },
 
     files : {
       config : 'config.json',
       assets : 'assets/',
-	  index : { path:'custom_index.html => index.html', template:'project', not_listed:true }
+	  index : { path:'custom_index.html => index.html', template:'project', not_listed:true },
     }
   }
 }
