@@ -109,7 +109,7 @@ class DialogBox extends Entity
 			parent: this,
 			depth: _options.depth + 0.3,
 		} );
-		
+		name_bg.texture.filter_min = name_bg.texture.filter_mag = nearest;
 		//name_bg.create( new Vector(8, -24), 240, 48);
 		
 		name_text = new Text( {

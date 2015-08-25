@@ -75,7 +75,7 @@ class GameState extends State {
 			size: new Vector(Luxe.camera.size.x, 180),
 			msg_bounds: new Rectangle(16, 32, 16, 32),
 			name_offset: new Vector(8, -16),
-			name_bounds: new Rectangle(8, 2, 8, 4),
+			name_bounds: new Rectangle(8, 2, 8, 8),
 			next_offset: new Vector(42, 32),
 			depth: 100,
 		} );

@@ -100,7 +100,7 @@ class ColorMatrix
 	}
 		
 	
-	var shader:Shader;
+	public var shader:Shader;
 	var multipliers:Matrix;
 	var offsets:Vector;
 	
